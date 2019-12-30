@@ -5,11 +5,11 @@ import Button from '../components/Button'
 import Display from '../components/Display'
 
 const initialState = {
-    displayValue: '0',
-    clearDisplay: false,
-    operation: null,
-    values: [0, 0],
-    current: 0
+    displayValue: '0', // valor que é mostrado na tela
+    clearDisplay: false, // limpar o valor monstrado na tela
+    operation: null, // operação selecionada
+    values: [0, 0], // indice 0 é usado até que alguma operação seja selecionada
+    current: 0 
 }
 
 export default class Calculator extends Component {
@@ -28,14 +28,20 @@ export default class Calculator extends Component {
     }
 
     setOperation(operation) {
+        // limpa o display, muda o current e armazena a operação
         if(this.state.current === 0) {
             this.setState({operation, current: 1, clearDisplay: true})
         }else{
+            // quando for escolhido a peração "="
             const equals = operation === '=' 
+            // guardando a operação selecionada
             const currentOperation = this.state.operation
-
+            // fazendo uma copia do array de valores
             const values = [...this.state.values]
+
             try {
+                // fazendo o calculo independente da operação
+                // então o array values com indice 0 recebe o valor calculado
                 values[0] = eval(`${values[0]} ${currentOperation} ${values[1]}`)
             } catch (error) {
                 values[0] = this.state.values[0]                
