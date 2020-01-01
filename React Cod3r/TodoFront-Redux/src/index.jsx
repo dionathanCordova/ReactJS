@@ -1,8 +1,21 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+// REDUX
+import {applyMiddleware, createStore} from 'redux'
+import {Provider} from 'react-redux'
+import reducers from  './main/reducers'
+import promise from 'redux-promise'
+import multi from 'redux-multi'
+import thunk from 'redux-thunk'
+
 import App from './main/app'
+
+const store = applyMiddleware(thunk, multi, promise)(createStore)(reducers)
+
 ReactDOM.render(
-    <App />, 
+    <Provider store={store}>
+        <App />
+    </Provider>, 
     document.getElementById('app')
 )
